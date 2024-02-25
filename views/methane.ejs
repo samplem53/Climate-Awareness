@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Climate Awareness</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
+      integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <header>
+
+      <nav>
+          <img
+              src="https://img.icons8.com/external-filled-outline-geotatah/50/000000/external-earth-emergency-and-disaster-management-color-filled-outline-geotatah.png" />
+          <a class="active" href="/">Home</a>
+          <a href="/methane">Methane</a>
+          <a href="/polar">Polar</a>
+          <a href="/tmp">Temperature</a>
+          <a href="#">Support</a>
+      </nav>
+      <!--nav-bar-->
+
+      <h1>Climate Awareness</h1>
+
+      <div class="slider">
+
+      </div>
+      <!--image slider-->
+
+  </header>
+    <!-- <h1>Methane</h1> -->
+    <div calss="chart" style="display: flex; align-items: center; justify-content: center;">
+      <canvas id="myChart" style="width: 80vw; height: 70vh; background-color: white; border-radius: 10px; padding: 1.6rem; border-style: solid; border-color: tomato;"></canvas>
+    </div>
+
+    <script>
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var input_values = "<%= val%>";
+      var input_labels = "<%= lab%>";
+      console.log(input_values);
+      let v = input_values.split(",");
+      let values = [];
+      v.forEach((item) => {
+        values.push(parseFloat(item));
+      });
+
+      let l = input_labels.split(",");
+      let labels = [];
+      l.forEach((item) => {
+        labels.push(parseFloat(item));
+      });
+      console.log(values);
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Methane in ppm",
+            data: values,
+            backgroundColor: [
+              "rgb(144,238,144)",
+              // "rgb(54, 162, 235)",
+              // "rgb(255, 205, 86)",
+            ],
+            // borderColor: "rgb(255, 99, 132)",
+            hoverOffset: 4,
+            // borderWidth:1,
+          },
+        ],
+      };
+
+      const config = {
+        type: "line",
+        data: data,
+        options: {
+          fill:true,
+          // responsive:true,
+          responsive:false,
+          // animations: {
+          //     tension: {
+          //         duration: 1000,
+          //         easing:'easing',
+          //         from: 1,
+          //         to: 0,
+          //         loop: true
+          //     }
+          // },
+          scales: {
+            y: {
+              // defining min and max so hiding the dataset does not change scale range
+              min: 1400,
+            //   max: ,
+            },
+          },
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: "xy",
+              },
+            },
+          },
+        },
+      };
+
+      var myChart = new Chart(ctx, config);
+    </script>
+  </body>
+</html>
